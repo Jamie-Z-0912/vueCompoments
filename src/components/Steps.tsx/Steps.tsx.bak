@@ -1,0 +1,95 @@
+// import style from "./steps.less";
+import { filterEmpty, getPropsData } from "../props-util";
+import { createComponent } from "@vue/composition-api";
+import Step from "./Step";
+
+// type statusType = "wait" | "process," | "finish" | "error";
+// type sizeType = "default" | "small";
+// type directionType = "horizontal" | "vertical";
+
+export default createComponent({
+  name: "Steps",
+  props: {
+    current: {
+      type: Number,
+      default: 0,
+    },
+    status: {
+      type: String,
+      default: "process",
+    },
+    size: {
+      type: String,
+      default: "",
+    },
+    direction: {
+      type: String,
+      default: "horizontal",
+    },
+    prefixCls: {
+      type: String,
+      default: "WL",
+    },
+    lastStepOffsetWidth: String,
+  },
+  setup(props, setupContext) {
+    const {
+      prefixCls,
+      direction,
+      // iconPrefix,
+      status,
+      size,
+      current,
+      // $scopedSlots,
+    } = props;
+
+    console.log("setupContext");
+    console.log(setupContext);
+
+    // const filteredChildren = filterEmpty(setupContext.slots.default([]));
+    const classString = {
+      [prefixCls]: true,
+      [`${prefixCls}-${direction}`]: true,
+      [`${prefixCls}-${size}`]: size,
+      [`${prefixCls}-label-${direction}`]: direction === "horizontal",
+    };
+    const stepsProps = {
+      class: classString,
+      ref: "vcStepsRef",
+    };
+    return (
+      <div {...stepsProps}>
+        <div>{setupContext.slots.default([])}</div>
+        {/* {filteredChildren.map((child: any, index: number) => {
+          const childProps = getPropsData(child);
+          const stepProps = {
+            props: {
+              stepNumber: `${index + 1}`,
+              stepIndex: index,
+              prefixCls,
+              ...childProps,
+            },
+            class: "",
+          };
+
+          // fix tail color
+          if (status === "error" && index === current - 1) {
+            stepProps.class = `${prefixCls}-next-error`;
+          }
+          if (!childProps.status) {
+            if (index === current) {
+              stepProps.props.status = status;
+            } else if (index < current) {
+              stepProps.props.status = "finish";
+            } else {
+              stepProps.props.status = "wait";
+            }
+          }
+
+          stepProps.props.active = index === current;
+          return <Step {...stepProps}></Step>;
+        })} */}
+      </div>
+    );
+  },
+});
