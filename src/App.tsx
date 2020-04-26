@@ -4,6 +4,7 @@ import { createComponent, reactive } from "@vue/composition-api";
 // import ImageLogo from "./assets/logo.png";
 import Steps from "./components/Steps/Steps";
 import Step from "./components/Steps/Step";
+import RadioButton from "./components/RadioButton";
 
 const stepList = [0, 1, 2, 3];
 const dic = [
@@ -34,6 +35,11 @@ const dic = [
     ],
   },
 ];
+
+const clickDic = [
+  { value: "disabled", label: "不可点击" },
+  { value: "abled", label: "可点击" },
+];
 export default createComponent({
   name: "App",
   setup() {
@@ -58,47 +64,12 @@ export default createComponent({
     }
     return () => (
       <div id="app">
-        <div class="box">
-          <label>
-            <input
-              type="radio"
-              checked={!data.disabled}
-              onChange={(e: any) =>
-                (data.disabled = e.target.value === "disable")
-              }
-              value="able"
-            />
-            可点击
-          </label>
-          <label>
-            <input
-              type="radio"
-              checked={data.disabled}
-              onChange={(e: any) =>
-                (data.disabled = e.target.value === "disable")
-              }
-              value="disable"
-            />
-            不可点击
-          </label>
+        <div className="box">
+          <RadioButton valueList={clickDic} name="disabled" />
+          {dic.map((i: iType) => (
+            <RadioButton valueList={i.list} name={i.key} label={i.text} />
+          ))}
         </div>
-        {dic.map((i: iType) => (
-          <div class="box">
-            <span>{i.text}：</span>
-            {i.list.map((item) => (
-              <label>
-                <input
-                  name={i.key}
-                  type="radio"
-                  checked={item.value === data[i.key]}
-                  onclick={(e: any) => (data[i.key] = e.target.value)}
-                  value={item.value}
-                />
-                {item.label}
-              </label>
-            ))}
-          </div>
-        ))}
         <div class="box">
           <Steps
             {...{
