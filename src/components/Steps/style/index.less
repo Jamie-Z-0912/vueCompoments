@@ -1,0 +1,156 @@
+@import "variables";
+
+@font-face {
+  font-family: "iconfont"; /* project id 719827 */
+  src: url("//at.alicdn.com/t/font_719827_f2ktrd6xzz8.eot");
+  src: url("//at.alicdn.com/t/font_719827_f2ktrd6xzz8.eot?#iefix")
+      format("embedded-opentype"),
+    url("//at.alicdn.com/t/font_719827_f2ktrd6xzz8.woff2") format("woff2"),
+    url("//at.alicdn.com/t/font_719827_f2ktrd6xzz8.woff") format("woff"),
+    url("//at.alicdn.com/t/font_719827_f2ktrd6xzz8.ttf") format("truetype"),
+    url("//at.alicdn.com/t/font_719827_f2ktrd6xzz8.svg#iconfont") format("svg");
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.@{stepsPrefixClass} {
+  font-size: 0;
+  width: 100%;
+  display: flex;
+  text-align: left;
+  &,
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.@{stepsPrefixClass}-item {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  flex: 1;
+  overflow: hidden;
+
+  &:last-child &-title:after {
+    display: none;
+  }
+
+  &-icon,
+  &-content {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &-icon {
+    border: 1px solid @wait-icon-color;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    border-radius: 26px;
+    font-size: 14px;
+    margin-right: 8px;
+    transition: background-color 0.3s, border-color 0.3s;
+
+    > .@{stepsPrefixClass}-icon {
+      line-height: 1;
+      color: @primary-color;
+      position: relative;
+    }
+
+    > .@{stepsPrefixClass}-icon-close::before {
+      content: "\e65c";
+    }
+    > .@{stepsPrefixClass}-icon-check::before {
+      content: "\e7fc";
+    }
+  }
+
+  &-content {
+    font-size: 12px;
+  }
+
+  &-title {
+    font-size: 14px;
+    line-height: 28px;
+    margin-bottom: 4px;
+    color: #666;
+    font-weight: bold;
+    padding-right: 10px;
+    position: relative;
+    &:after {
+      content: "";
+      height: 1px;
+      width: 1000px;
+      background: @process-tail-color;
+      display: block;
+      position: absolute;
+      top: 13px;
+      left: 100%;
+    }
+  }
+  &-description {
+    font-size: 12px;
+    color: #999;
+  }
+
+  .step-item-status(wait);
+  .step-item-status(process);
+  &-process &-icon {
+    background: @process-icon-color;
+    > .@{stepsPrefixClass}-icon {
+      color: #fff;
+    }
+  }
+  .step-item-status(finish);
+  .step-item-status(error);
+
+  &-finish .@{stepsPrefixClass}-item-title:after {
+    background: @finish-tail-color;
+  }
+
+  &.@{stepsPrefixClass}-next-error .@{stepsPrefixClass}-item-title:after {
+    background: @finish-tail-color;
+  }
+}
+
+.@{stepsPrefixClass}-horizontal:not(.@{stepsPrefixClass}-label-vertical) {
+  .@{stepsPrefixClass}-item {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+    &-description {
+      max-width: 100px;
+    }
+  }
+}
+
+.step-item-status(@status) {
+  @icon-color: "@{status}-icon-color";
+  @title-color: "@{status}-title-color";
+  @description-color: "@{status}-description-color";
+  &-@{status} &-icon {
+    border-color: @@icon-color;
+    background-color: #fff;
+    > .@{stepsPrefixClass}-icon {
+      color: @@icon-color;
+    }
+  }
+  &-@{status} &-title {
+    color: @@title-color;
+  }
+  &-@{status} &-description {
+    color: @@description-color;
+  }
+}
+
+@import "small";
+@import "vertical";
+@import "label-vertical";
