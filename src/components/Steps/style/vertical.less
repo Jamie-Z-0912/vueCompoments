@@ -1,0 +1,53 @@
+@import "variables";
+
+.@{stepsPrefixClass}-vertical {
+  display: block;
+  .@{stepsPrefixClass}-item {
+    display: block;
+    overflow: visible;
+    &:not(:last-child) {
+      .@{stepsPrefixClass}-item-icon {
+        &::before {
+          position: absolute;
+          content: "";
+          height: 100%;
+          width: 1px;
+          background: @process-tail-color;
+          z-index: -1;
+        }
+      }
+    }
+    &-icon::before {
+      left: 13px;
+    }
+    &-content {
+      min-height: 48px;
+      overflow: hidden;
+    }
+    &-title {
+      line-height: 26px;
+      &::after {
+        display: none;
+      }
+    }
+    &-description {
+      padding-bottom: 12px;
+    }
+    &-finish {
+      .@{stepsPrefixClass}-item-icon:before {
+        background: @finish-tail-color;
+      }
+    }
+  }
+
+  &.@{stepsPrefixClass}-small {
+    .@{stepsPrefixClass}-item {
+      &-title {
+        line-height: 18px;
+      }
+      &-icon::before {
+        left: 9px;
+      }
+    }
+  }
+}
