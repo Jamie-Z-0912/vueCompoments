@@ -38,12 +38,11 @@ export default createComponent({
   },
   setup(props, { slots, emit }) {
     interface curType {
-      index: any;
+      step_num: any;
     }
     function onStepClick(cur: curType) {
       const { current, disabled } = reactive(props);
-      if (!disabled && cur.index && current !== cur.index) {
-        console.log("steps onStepClick", cur.index);
+      if (!disabled && cur.step_num && current + 1 !== cur.step_num) {
         emit("change", cur);
       }
     }
@@ -68,10 +67,10 @@ export default createComponent({
         <div ref="WlStepsRef" class={classString}>
           {filteredChildren.map((child: VNode, index: number) => {
             const childProps = getPropsData(child);
-            const stepNumber = index;
+            const stepNumber = index + 1;
             const stepProps = {
               props: {
-                stepNumber: `${stepNumber + 1}`,
+                stepNumber,
                 prefixCls,
                 disabled,
                 ...childProps,
@@ -83,19 +82,19 @@ export default createComponent({
               // scopedSlots: $scopedSlots, 作用于插槽暂时不用
             };
             // fix tail color
-            if (status === "error" && index === current - 1) {
+            if (status === "error" && stepNumber === current) {
               stepProps.class = `${prefixCls}-next-error`;
             }
             if (!childProps.status) {
-              if (stepNumber === current) {
+              if (index === current) {
                 stepProps.props.status = status;
-              } else if (stepNumber < current) {
+              } else if (index < current) {
                 stepProps.props.status = "finish";
               } else {
                 stepProps.props.status = "wait";
               }
             }
-            stepProps.props.active = stepNumber === current;
+            stepProps.props.active = index === current;
             return cloneElement(child, stepProps);
           })}
         </div>

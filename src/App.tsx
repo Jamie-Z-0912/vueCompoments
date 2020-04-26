@@ -5,7 +5,7 @@ import { createComponent, reactive } from "@vue/composition-api";
 import Steps from "./components/Steps/Steps";
 import Step from "./components/Steps/Step";
 
-const stepList = [1, 2, 3, 4];
+const stepList = [0, 1, 2, 3];
 const dic = [
   {
     key: "status",
@@ -46,6 +46,11 @@ export default createComponent({
       disabled: false,
     });
 
+    function changeCurrent(current: { [index: string]: any }) {
+      data.current = current.step_num - 1;
+      console.log(`被点击前状态：${current.status}`);
+    }
+
     interface iType {
       key: string;
       text: string;
@@ -53,16 +58,6 @@ export default createComponent({
     }
     return () => (
       <div id="app">
-        <div class="box">
-          <span>步骤：</span>
-          <input
-            min={0}
-            max={stepList.length}
-            type="number"
-            onChange={(e: any) => (data.current = parseInt(e.target.value))}
-            value={data.current}
-          />
-        </div>
         <div class="box">
           <label>
             <input
@@ -109,18 +104,15 @@ export default createComponent({
             {...{
               props: data,
               on: {
-                change: (cur: { [index: string]: any }) => {
-                  let str = "";
-                  for (let k in cur) {
-                    str += `${k}: ${cur[k]}\n`;
-                  }
-                  alert(str);
-                },
+                change: changeCurrent,
               },
             }}
           >
             {stepList.map((item) => (
-              <Step title={`第 ${item} 步`} content={`我的第 ${item} 步`} />
+              <Step
+                title={`第 ${item + 1} 步`}
+                content={`我的第 ${item + 1} 步`}
+              />
             ))}
           </Steps>
         </div>

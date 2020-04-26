@@ -11,8 +11,8 @@ export default createComponent({
       default: "process",
     },
     stepNumber: {
-      type: String,
-      default: "1",
+      type: Number,
+      default: 1,
     },
     title: String,
     content: String,
@@ -33,7 +33,7 @@ export default createComponent({
     function stepClick() {
       const { disabled, stepNumber, status } = reactive(props);
       if (listeners.stepClick && !disabled) {
-        emit("stepClick", { status, index: stepNumber });
+        emit("stepClick", { status, step_num: stepNumber });
       }
     }
 
