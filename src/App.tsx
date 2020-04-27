@@ -64,10 +64,14 @@ export default createComponent({
     }
     return () => (
       <div id="app">
-        <div className="box">
-          <RadioButton valueList={clickDic} name="disabled" />
+        <div class="box">
+          <div style="margin-top:10px">
+            <RadioButton valueList={clickDic} name="disabled" />
+          </div>
           {dic.map((i: iType) => (
-            <RadioButton valueList={i.list} name={i.key} label={i.text} />
+            <div style="margin-top:10px">
+              <RadioButton valueList={i.list} name={i.key} label={i.text} />
+            </div>
           ))}
         </div>
         <div class="box">

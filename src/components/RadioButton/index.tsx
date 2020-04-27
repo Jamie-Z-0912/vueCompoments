@@ -32,7 +32,13 @@ export default createComponent({
         <div class="radio_group">
           {label ? <span>{label}：</span> : null}
           {list.map((item: itemType) => (
-            <label>
+            <label
+              class={
+                (item.value as String | Number) === value
+                  ? "radio-item active"
+                  : "radio-item"
+              }
+            >
               <input
                 name={name}
                 type="radio"
