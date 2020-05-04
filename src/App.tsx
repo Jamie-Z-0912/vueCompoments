@@ -43,7 +43,7 @@ const clickDic = [
 export default createComponent({
   name: "App",
   setup() {
-    type dataType = { [index: string]: String | Number | boolean };
+    type dataType = { [index: string]: string | number | boolean };
     const data: dataType = reactive({
       direction: "horizontal",
       size: "",
@@ -66,11 +66,34 @@ export default createComponent({
       <div id="app">
         <div class="box">
           <div style="margin-top:10px">
-            <RadioButton valueList={clickDic} name="disabled" />
+            <RadioButton
+              valueList={clickDic}
+              value={data.disabled ? "disabled" : "abled"}
+              name="disabled"
+              {...{
+                on: {
+                  change: (e: { [index: string]: any }) => {
+                    data.disabled = e.target.value === "disabled";
+                  },
+                },
+              }}
+            />
           </div>
           {dic.map((i: iType) => (
             <div style="margin-top:10px">
-              <RadioButton valueList={i.list} name={i.key} label={i.text} />
+              <RadioButton
+                valueList={i.list}
+                value={`${data[i.key]}`}
+                name={i.key}
+                label={i.text}
+                {...{
+                  on: {
+                    change: (e: { [index: string]: any }) => {
+                      data[e.name] = e.target.value;
+                    },
+                  },
+                }}
+              />
             </div>
           ))}
         </div>

@@ -13,19 +13,21 @@ export default createComponent({
       type: Array,
       required: true,
     },
-    value: String || Number,
-    eventClick: {
-      type: (null as unknown) as PropType<(event: MouseEvent) => void>,
-    },
+    value: String,
   },
-  setup(props) {
+  setup(props, { emit, listeners }) {
+    function handleChange(event: MouseEvent) {
+      const { name } = reactive(props);
+      if (listeners.change) {
+        emit("change", { name, target: event.target });
+      }
+    }
     return () => {
       const { name, label, valueList, value } = reactive(props);
       interface itemType {
         label: String;
-        value: String | Number;
+        value: String;
       }
-
       const list = valueList as itemType[];
 
       return (
@@ -33,18 +35,14 @@ export default createComponent({
           {label ? <span>{label}：</span> : null}
           {list.map((item: itemType) => (
             <label
-              class={
-                (item.value as String | Number) === value
-                  ? "radio-item active"
-                  : "radio-item"
-              }
+              class={item.value === value ? "radio-item active" : "radio-item"}
             >
               <input
                 name={name}
                 type="radio"
-                checked={(item.value as String | Number) === value}
+                checked={item.value === value}
                 value={item.value}
-                onClick={props.eventClick}
+                onClick={handleChange}
               />
               {item.label}
             </label>
