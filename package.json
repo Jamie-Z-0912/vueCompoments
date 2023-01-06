@@ -13,9 +13,9 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",
-    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-typescript": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
+    "@vue/cli-service": "^5.0.8",
     "babel-preset-vca-jsx": "^0.1.0",
     "less": "^3.11.1",
     "less-loader": "^6.0.0",
